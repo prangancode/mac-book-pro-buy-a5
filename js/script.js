@@ -1,24 +1,7 @@
-// // Memory getting Element By Id
-// const memory8Gb = document.getElementById("8gb-memory");
-// const memory16Gb = document.getElementById("16gb-memory");
-
+// Getting Extracost of Memory, Storage & Delivery id
 const extraMemoryCost = document.getElementById("extra-memory-cost");
-
-// // Storage getting Element By Id
-
-// const ssd256Gb = document.getElementById("256gb-ssd");
-// const ssd512Gb = document.getElementById("512gb-ssd");
-// const ssd1Tb = document.getElementById("1tb-ssd");
-
 const extraStorageCost = document.getElementById("extra-storage-cost");
-
-
-// Choose your Delivery option getting element by id
-
-const freeCharge = document.getElementById("free-charge");
-const deliveryCharge = document.getElementById("delivery-charge");
-
-const deliveryChargeDisplay = document.getElementById("delivery-charge-display");
+const deliveryChargeDisplay = document.getElementById("extra-delivery-cost");
 
 // Total Price 
 const totalPrice = document.getElementById("total-price");
@@ -33,45 +16,59 @@ const applyButton = document.getElementById("apply-button");
 // Total after applying coupon
 const total = document.getElementById("total");
 
-// Memory Onclick
 
+
+// Memory Onclick
 document.getElementById("8gb-memory").addEventListener('click', function () {
-    extraMemoryCost.innerText = '0';
-    updateTotal();
+    getId('extra-memory-cost', true, 0);
 });
 document.getElementById("16gb-memory").addEventListener('click', function () {
-    extraMemoryCost.innerText = '180';
-    updateTotal();
+    getId('extra-memory-cost', false, 1)
 });
 
 // Storage Onclick
-
 document.getElementById("256gb-ssd").addEventListener('click', function () {
-    extraStorageCost.innerText = '0';
-    updateTotal();
+    getId('extra-storage-cost', true, 0);
 });
 document.getElementById("512gb-ssd").addEventListener('click', function () {
-    extraStorageCost.innerText = '100';
-    updateTotal();
+    getId('extra-storage-cost', false, 1);
 });
 document.getElementById("1tb-ssd").addEventListener('click', function () {
-    extraStorageCost.innerText = '180';
-    updateTotal();
+    getId('extra-storage-cost', false, 2);
 });
 
 // Choose your delivery option onclick
-
 document.getElementById("free-charge").addEventListener('click', function () {
-    deliveryChargeDisplay.innerText = '0';
-    updateTotal();
+    getId('extra-delivery-cost', true, 0);
 });
 document.getElementById("delivery-charge").addEventListener('click', function () {
-    deliveryChargeDisplay.innerText = '20';
-    updateTotal();
+    getId('extra-delivery-cost', false, 1);
 });
 
-// Update Total 
 
+/* FUNCTION getId */
+function getId(id, isBoolean, value) {
+    const extraIdCost = document.getElementById(id);
+    if (isBoolean == true && value == 0) {
+        extraIdCost.innerText = '0';
+    }
+    else if (isBoolean == false && id == 'extra-memory-cost' && value == 1) {
+        extraIdCost.innerText = '180';
+    }
+    else if (isBoolean == false && id == 'extra-storage-cost' && value == 1) {
+        extraIdCost.innerText = '100';
+    }
+    else if (isBoolean == false && id == 'extra-storage-cost' && value == 2) {
+        extraIdCost.innerText = '180';
+    }
+    else if (isBoolean == false && id == 'extra-delivery-cost' && value == 1) {
+        extraIdCost.innerText = '20';
+    };
+    updateTotal();
+};
+
+
+/* FUNCTION updateTotal */
 function updateTotal() {
     const bestPriceUpdate = Number(bestPrice.innerText);
     const extraMemoryCostUpdate = Number(extraMemoryCost.innerText);
@@ -81,10 +78,10 @@ function updateTotal() {
     totalPrice.innerText = totalCost;
     total.innerText = totalCost;
     return totalCost;
-}
+};
+
 
 // Applying Promo code for discounted Price
-
 applyButton.addEventListener('click', function () {
     if (promoCodeInput.value == 'stevekaku') {
         const discountAmount = updateTotal() * .2;
@@ -92,7 +89,6 @@ applyButton.addEventListener('click', function () {
         total.innerText = discountedTotalUpdate;
         promoCodeInput.value = '';
         document.querySelector('.applybutton').innerText = 'Promo Code Applied';
-
     }
     else if (promoCodeInput.value == '') {
         alert('Plese provide pomo code');
