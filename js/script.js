@@ -24,14 +24,17 @@ const deliveryChargeDisplay = document.getElementById("delivery-charge-display")
 const totalPrice = document.getElementById("total-price");
 
 // Best Price
-const bestPrice = document.getElementById('best-price');
+const bestPrice = document.getElementById("best-price");
 
-
+// Applying Promocode
+const promoCodeInput = document.getElementById("promo-code-input");
+const applyButton = document.getElementById("apply-button");
 
 // Total after applying coupon
 const total = document.getElementById("total");
 
 // Memory Onclick
+
 memory8Gb.addEventListener('click', function () {
     extraMemoryCost.innerText = '0';
     updateTotal();
@@ -42,6 +45,7 @@ memory16Gb.addEventListener('click', function () {
 });
 
 // Storage Onclick
+
 ssd256Gb.addEventListener('click', function () {
     extraStorageCost.innerText = '0';
     updateTotal();
@@ -56,6 +60,7 @@ ssd1Tb.addEventListener('click', function () {
 });
 
 // Choose your delivery option onclick
+
 freeCharge.addEventListener('click', function () {
     deliveryChargeDisplay.innerText = '0';
     updateTotal();
@@ -66,6 +71,7 @@ deliveryCharge.addEventListener('click', function () {
 });
 
 // Update Total 
+
 function updateTotal() {
     const bestPriceUpdate = Number(bestPrice.innerText);
     const extraMemoryCostUpdate = Number(extraMemoryCost.innerText);
@@ -77,3 +83,22 @@ function updateTotal() {
     return totalCost;
 }
 
+// Applying Promo code for discounted Price
+
+applyButton.addEventListener('click', function () {
+    if (promoCodeInput.value == 'stevekaku') {
+        const discountAmount = updateTotal() * .2;
+        const discountedTotalUpdate = updateTotal() - discountAmount;
+        total.innerText = discountedTotalUpdate;
+        promoCodeInput.value = '';
+        document.querySelector('.applybutton').innerText = 'Promo Code Applied';
+
+    }
+    else if (promoCodeInput.value == '') {
+        alert('Plese provide pomo code');
+    }
+    else {
+        alert('Pomo code no match');
+        promoCodeInput.value = '';
+    }
+});
